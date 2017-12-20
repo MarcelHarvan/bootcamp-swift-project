@@ -59,14 +59,12 @@ class BlogViewController: UIViewController, UITableViewDataSource {
 //
 //        }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let blog = BlogController.sharedInstance.list[indexPath.row]
-        let rawCell = Bundle.main.loadNibNamed("BlogCell", owner: BlogCell.self, options: nil)?.first
         
-        guard let blogCell = rawCell as? BlogCell else {
-            print("Not possible convert the cell to PersonCell")
-            return rawCell as! UITableViewCell
+        guard let blogCell = tableView.dequeueReusableCell(withIdentifier: "BlogCell", for: indexPath) as? BlogCell else {
+               // TODO: Handle error scenario
+               return UITableViewCell()
         }
         
         blogCell.configureCell(blog: blog)
